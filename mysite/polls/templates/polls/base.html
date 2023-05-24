@@ -9,15 +9,27 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
+
+    {% comment %}
+    TODO:
+    -Create a base.html template that holds the main look-and-feel of your site.
+    -Create a base_SECTIONNAME.html template for each “section” of your site. 
+        For example, base_news.html, base_sports.html. These templates all extend base.html 
+        and include section-specific styles/design.
+    -Create individual templates for each type of page, such as a news article or blog entry. 
+        These templates extend the appropriate section template.
+
+    https://docs.djangoproject.com/en/4.2/ref/templates/language/#template-inheritance
+    {% endcomment %}
+
         {% block index %}
-        {% endblock %}
+        {% endblock index %} {# optional endblock name #}
 
         {% block choices %}
         {% endblock %}
 
         {% block correct_answer %}
         {% endblock %}
-        
 
     </body>
 </html>

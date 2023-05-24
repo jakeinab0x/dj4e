@@ -1,18 +1,14 @@
 {% extends './base.html' %}
 
 {% block index %}
-
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        {% comment %}
-        Avoid hard coding url <a href="/polls/{{ question.id }}/"> ...
-        {% endcomment %}
+        {# Avoid hard coding url like this: <a href="/polls/{{ question.id }}/"> #}
         <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
-
 {% endblock %}
