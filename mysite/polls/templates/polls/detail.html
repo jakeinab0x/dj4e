@@ -1,13 +1,19 @@
 {% extends './base.html' %}
 
+{% block choices %}
+<h1>{{ question.question_text }}</h1>
+
+<ol>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ol>
+{% endblock %}
+
 {% block correct_answer %}
-
 {% if correct_answer %}
-    
     <p>Answer to the Ultimate Question = {{ correct_answer }}</p>
-
 {% else %}
     <p>No correct answer available.</p>
-
 {% endif %}
 {% endblock %}
