@@ -1,0 +1,13 @@
+{% extends './base.html' %}
+
+{% block correct_answer %}
+
+{% if correct_answer %}
+    
+    <p>Answer to the Ultimate Question = {{ correct_answer }}</p>
+
+{% else %}
+    <p>No correct answer available.</p>
+
+{% endif %}
+{% endblock %}
