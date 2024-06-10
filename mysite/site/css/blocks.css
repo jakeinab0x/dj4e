@@ -8,6 +8,53 @@
 }
 
 /* Here is one of many  CSS rules you will need... */
+div {
+    border-style: solid;
+    position: fixed;
+    border-width: 5px;
+    margin: 5px;
+    padding: 5px;
+    width: 25%;
+
+}
+
 #one {
-    
+    border-color: blue;
+    bottom: 5%;
+    right: 1%;
+}
+
+#two {
+    border-color: green;
+    top: 5%;
+    right: 1%;
+}
+
+#three {
+    border-color: orange;
+    top: 5%;
+    left: 1%;
+}
+
+#four {
+    border-color: rgb(244, 220, 52);
+    bottom: 5%;
+    left: 1%;
+}
+
+#link {
+    background-color: rgb(29, 75, 52);
+    color: white;
+    position: fixed;
+    top: 2%;
+    left: 45%;
+    margin-top: 5px;
+    padding: 5px;
+    height: fit-content;
+    width: fit-content;
+}
+
+a, a:link, a:visited, a:hover, a:active { 
+    text-decoration: none; 
+    color: white 
 }
