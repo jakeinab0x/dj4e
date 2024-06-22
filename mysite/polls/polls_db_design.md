@@ -2,17 +2,11 @@ Polls database model using crow's foot notation (entity relationship model)
 
 ```mermaid
     erDiagram
-    USER }|--O{ QUESTION : asks
-    USER {
-        int id
-        string name
-        string email
-    }
     QUESTION ||--|{ CHOICE : has
     QUESTION {
         int id
-        string name
-        string email
+        string question_text
+        datetime pub_date
     }
     CHOICE {
         int id
@@ -24,8 +18,7 @@ Polls database model using crow's foot notation (entity relationship model)
 ER diagram key:
 ```mermaid
     erDiagram
-    zero_or_one |o--|| exactly_one : relationship
-    zero_or_more }o--|{ one_or_more : relationship
+    exactly_one ||--|{ one_or_more : relationship
 
 
 ```
