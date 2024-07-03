@@ -5,3 +5,16 @@
 <li><a href="/autos">autos crud</a></li>
 </ul>
 <p>Hello World</p>
+{% if user.is_authenticated %}
+<p>Authenticated as
+<pre>
+Name: {{ user.get_full_name }}
+Email: {{ user.email }}
+ID: {{ user.id }}
+</pre>
+</p>
+<p>You can <a href="{% url 'logout' %}?next={{ request.path }}">logout</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<p>You can <a href="{% url 'login' %}?next={{ request.path }}">login</a> if you like.
+{% endif %}
