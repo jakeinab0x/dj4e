@@ -5,7 +5,7 @@ from django.core.validators import MinLengthValidator
 class Breed(models.Model):
     name = models.CharField(
         max_length=200,
-        validators=MinLengthValidator[(2, "Breed must have at least two characters.")]
+        validators=[MinLengthValidator(2, "Breed must have at least two characters.")]
         )
 
     def __str__(self):
@@ -14,7 +14,7 @@ class Breed(models.Model):
 class Cat(models.Model):
     nickname = models.CharField(
         max_length=200,
-        validators=MinLengthValidator[(2, "Nickname must have at least two characters.")]
+        validators=[MinLengthValidator(2, "Nickname must have at least two characters.")]
         )
     weight = models.PositiveIntegerField()
     foods = models.CharField(max_length=300)
