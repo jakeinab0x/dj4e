@@ -16,6 +16,13 @@ class MainView(LoginRequiredMixin, View):
 
         ctx = {'breed_count': bc, 'cat_list': cl}
         return render(request, 'cats/cat_list.html', ctx)
+
+
+class BreedView(LoginRequiredMixin, View):
+    def get(self, request):
+        bl = Breed.objects.all()
+        ctx = {'breed_list':bl}
+        return render(request, 'cats/breed_list.html', ctx)
     
 
 class BreedCreate(LoginRequiredMixin, CreateView):
