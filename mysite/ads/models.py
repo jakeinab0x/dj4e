@@ -11,7 +11,7 @@ class Ad(models.Model):
     text = models.TextField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     # Shows up in the admin list
     def __str__(self) -> str:
