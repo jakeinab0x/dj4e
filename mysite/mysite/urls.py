@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # Keep
     path('accounts/', include('django.contrib.auth.urls')),  # Keep
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),  # Keep
-    path('ads', include('ads.urls')),
+    path('ads/', include('ads.urls')),
 ]
 
 # Serve the static HTML
