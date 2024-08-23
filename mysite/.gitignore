@@ -2,3 +2,4 @@ __pycache__
 *.swp
 *.sqlite3
 .env
+github_settings.py
