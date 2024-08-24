@@ -1,6 +1,6 @@
 {% extends "base_menu.html" %}
 {% block content %}
-<h1>Ads</h1>
+<h1>Ads 1.0</h1>
 <p>
 {% if ad_list %}
 <ul>
@@ -16,14 +16,6 @@
 </ul>
 {% else %}
   <p>There are no ads in the database.</p>
-{% endif %}
-</p>
-<p>
-<a href="{% url 'ads:ad_create' %}">Add an ad</a> |
-{% if user.is_authenticated %}
-<a href="{% url 'logout' %}?next={% url 'ads:all' %}">Logout</a>
-{% else %}
-<a href="{% url 'login' %}?next={% url 'ads:all' %}">Login</a>
 {% endif %}
 </p>
 {% endblock %}
