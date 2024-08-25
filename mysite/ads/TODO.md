@@ -5,7 +5,7 @@ TODOs:
 - ~~update views~~
 - ~~update templates~~
 - update urls
-- add stream_file() view
+- ~~add stream_file() view~~
 - manual tests
 
 
