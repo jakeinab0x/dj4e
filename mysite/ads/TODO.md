@@ -3,7 +3,7 @@ TODOs:
 - ~~migrate~~
 - ~~create ads/forms.py~~
 - ~~update views~~
-- update templates
+- ~~update templates~~
 - update urls
 - add stream_file() view
 - manual tests
