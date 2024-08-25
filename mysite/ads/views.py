@@ -41,10 +41,10 @@ class AdCreateView(LoginRequiredMixin, View):
 
 
 class AdUpdateView(OwnerUpdateView):
-    template_name = 'ads/form.html'
+    template_name = 'ads/ad_form.html'
     success_url = reverse_lazy('ads:all')
 
-    def get(self, request, pk);
+    def get(self, request, pk):
         ad = get_object_or_404(Ad, id=pk, owner=self.request.user)
         form = CreateForm(instance=ad)
         context = {'form':form}

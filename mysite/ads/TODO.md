@@ -4,8 +4,8 @@ TODOs:
 - ~~create ads/forms.py~~
 - ~~update views~~
 - ~~update templates~~
-- update urls
+- ~~update urls~~
 - ~~add stream_file() view~~
-- manual tests
+- ~~manual tests~~
 
 
