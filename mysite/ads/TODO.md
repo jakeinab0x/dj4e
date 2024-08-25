@@ -1,6 +1,6 @@
 TODOs:
 - ~~ad picture field to Ad model~~
-- migrate
+- ~~migrate~~
 - create ads/forms.py
 - update views
 - update templates
