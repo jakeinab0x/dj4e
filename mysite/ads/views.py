@@ -11,11 +11,9 @@ from ads.forms import CreateForm
 
 class AdListView(OwnerListView):
     model = Ad
-    template_name = "ads/ad_list.html"
 
 class AdDetailView(OwnerDetailView):
     model = Ad
-    template_name = "ads/ad_detail.html"
 
 # These new views don't inherit from owner.py 
 # because they manage the owner column in the get() and post() methods.
@@ -67,4 +65,11 @@ class AdUpdateView(OwnerUpdateView):
 
 class AdDeleteView(OwnerDeleteView):
     model = Ad
-    template_name = 'ads/ad_delete.html'
+
+def stream_file(request, pk):
+    ad = get_object_or_404(Ad, id=pk)
+    response = HttpResponse()
+    response['Content-Type'] = ad.content_type
+    response['Content-Length'] = len(ad.picture)
+    response.write(ad.picture)
+    return response
