@@ -1,11 +1,12 @@
 TODOs:
-- ~~ad picture field to Ad model~~
-- ~~migrate~~
-- ~~create ads/forms.py~~
-- ~~update views~~
-- ~~update templates~~
-- ~~update urls~~
-- ~~add stream_file() view~~
-- ~~manual tests~~
+- update models
+- add CommentForm
+- adapt views 
+- adapt detail template
+- add comment urls
+- add comment views
+- add comment_delete.html
+- manual tests
+
 
 
