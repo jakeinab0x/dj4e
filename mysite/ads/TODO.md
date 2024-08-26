@@ -1,5 +1,5 @@
 TODOs:
-- update models
+- ~~update models~~
 - add CommentForm
 - adapt views 
 - adapt detail template
