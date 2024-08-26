@@ -1,6 +1,6 @@
 TODOs:
 - ~~update models~~
-- add CommentForm
+- ~~add CommentForm~~
 - adapt views 
 - adapt detail template
 - add comment urls
