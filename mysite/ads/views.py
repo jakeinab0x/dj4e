@@ -1,19 +1,29 @@
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ads.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 
-from ads.models import Ad
-from ads.forms import CreateForm
+from ads.models import Ad, Comment
+from ads.forms import CreateForm, CommentForm
 
 class AdListView(OwnerListView):
     model = Ad
 
 class AdDetailView(OwnerDetailView):
     model = Ad
+
+    def get(self, request, pk):
+        ad = get_object_or_404(Ad, id=pk)
+        comments = Comment.objects.filter(ad=ad).order_by('-update_at')
+        comment_form = CommentForm()
+        context = {'ad': ad, 
+                   'comments': comments, 
+                   'comment_form': comment_form
+                  }
+        return render(request, self.template_name, context)
 
 # These new views don't inherit from owner.py 
 # because they manage the owner column in the get() and post() methods.

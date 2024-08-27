@@ -44,6 +44,7 @@ class CreateForm(forms.ModelForm):
 
         return instance
 
+# We're creating as a form so we can use crispyforms for the UI
 class CommentForm(forms.Form):
     comment = forms.CharField(required=True, max_length=500, min_length=3, strip=True)
 
