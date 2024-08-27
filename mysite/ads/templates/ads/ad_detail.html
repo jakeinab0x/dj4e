@@ -59,8 +59,8 @@ onclick="document.getElementById('overlay').style.display='block';">
 <p> {{ comment.text }}
 ({{ comment.updated_at|naturaltime }})
 {% if user == comment.owner %}
-<a href="{% url 'ads:ads_comment_delete' comment.id %}"><i class= "fa fa-trash"></i></a>
+<a href="{% url 'ads:ad_comment_delete' comment.id %}"><i class="fa fa-trash"></i></a>
 {% endif %}
 </p>
-{% endif %}
+{% endfor %}
 {% endblock %}

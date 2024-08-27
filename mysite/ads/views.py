@@ -14,10 +14,11 @@ class AdListView(OwnerListView):
 
 class AdDetailView(OwnerDetailView):
     model = Ad
+    template_name = 'ads/ad_detail.html'
 
     def get(self, request, pk):
         ad = get_object_or_404(Ad, id=pk)
-        comments = Comment.objects.filter(ad=ad).order_by('-update_at')
+        comments = Comment.objects.filter(ad=ad).order_by('-updated_at')
         comment_form = CommentForm()
         context = {'ad': ad, 
                    'comments': comments, 
@@ -96,6 +97,6 @@ class CommentDeleteView(OwnerDeleteView):
     template_name = 'ads/ad_comment_delete.html'
 
     # https://stackoverflow.com/questions/26290415/deleteview-with-a-dynamic-success-url-dependent-on-id
-    def get_success_url(self) -> str:
+    def get_success_url(self):
         ad = self.object.ad
         return reverse('ads:ad_detail', args=[ad.id])
