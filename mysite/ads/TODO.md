@@ -6,7 +6,7 @@ TODOs:
 - ~~add comment urls~~
 - ~~add comment views~~
 - ~~add comment_delete.html~~
-- manual tests
+- ~~manual tests~~
 
 
 
