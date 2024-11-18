@@ -1,6 +1,0 @@
-This favicon was generated using the following font:
-
-- Font Title: Sankofa Display
-- Font Author: Copyright 2024 The Sankofa Display Project Authors (https://github.com/batsimadz/Sankofa-Display)
-- Font Source: https://fonts.gstatic.com/s/sankofadisplay/v2/Ktk1ALSRd4LucUDghJ2rTqXOoh33F6mZVY9Y5w.ttf
-- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
