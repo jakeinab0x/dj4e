@@ -14,7 +14,17 @@
       {% if user.is_authenticated %}
       <!-- Two hrefs with two stacked icons each - one showing and one hidden -->
       <a href="#" onclick=
-            "favPost('{% url 'favs:ad_unfavourite' ad.id %}', {{ ad.id }});return false;"
+            "favPost('{% url 'ads:ad_unfavourite' ad.id %}', {{ ad.id }});return false;"
+            {% if ad.id not in favourites %} style="display: none;" {% endif %}
+            id="favourite_star_{{ad.id}}">
+      <span class="fa-stack" style="vertical-align: middle;">
+      <i class="fa fa-star fa-stack-1x" style="color: orange;"></i>
+      <i class="fa fa-star-o fa-stack-1x"></i>
+      </span>
+      </a>
+      <!-- the second href -->
+      <a href="#" onclick=
+            "favPost('{% url 'ads:ad_favourite' ad.id %}', {{ ad.id }});return false;"
             {% if ad.id not in favourites %} style="display: none;" {% endif %}
             id="favourite_star_{{ad.id}}">
       <span class="fa-stack" style="vertical-align: middle;">

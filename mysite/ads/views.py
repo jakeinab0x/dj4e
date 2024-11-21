@@ -11,7 +11,7 @@ from ads.forms import CreateForm, CommentForm
 
 class AdListView(OwnerListView):
     model = Ad
-    template_name = 'ads/list.html'
+    template_name = 'ads/ad_list.html'
 
     def get(self, request):
         ad_list = Ad.objects.all()
@@ -112,3 +112,33 @@ class CommentDeleteView(OwnerDeleteView):
     def get_success_url(self):
         ad = self.object.ad
         return reverse('ads:ad_detail', args=[ad.id])
+
+# csrf exemption in class based views
+# https://stackoverflow.com/questions/16458166/how-to-disable-djangos-csrf-validation
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.db.utils import IntegrityError
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AddFavouriteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        print(f"Add PK {pk}")
+        ad = get_object_or_404(Ad, id=pk)
+        fav = Fav(user=request.user, ad=ad)
+        try: 
+            fav.save() # In case of duplicate key
+        except IntegrityError:
+            pass
+        return HttpResponse()
+    
+@method_decorator(csrf_exempt, name='dispatch')
+class DeleteFavouriteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        print(f"Delete PK {pk}")
+        ad = get_object_or_404(Ad, id=pk)
+        try:
+            Fav.objects.get(user=request.user, ad=ad).delete()
+        except Fav.DoesNotExist:
+            pass
+        return HttpResponse()
+    
