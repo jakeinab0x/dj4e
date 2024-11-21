@@ -6,11 +6,23 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ads.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 
-from ads.models import Ad, Comment
+from ads.models import Ad, Comment, Fav
 from ads.forms import CreateForm, CommentForm
 
 class AdListView(OwnerListView):
     model = Ad
+    template_name = 'ads/list.html'
+
+    def get(self, request):
+        ad_list = Ad.objects.all()
+        favourites = list()
+        if request.user.is_authenticated:
+            # rows = [{'id': 2}, {'id': 4} ...] list of rows
+            rows = request.user.favourite_ads.values('id')
+            # favourites = [2, 4, ...] using list comprehension
+            favourites = [row['id'] for row in rows]
+        ctx = {'ad_list': ad_list, 'favourites': favourites}
+        return render(request, self.template_name, ctx)
 
 class AdDetailView(OwnerDetailView):
     model = Ad
