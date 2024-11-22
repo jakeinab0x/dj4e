@@ -19,8 +19,8 @@ class Ad(models.Model):
     comments = models.ManyToManyField(settings.AUTH_USER_MODEL,
                             through='Comment', related_name='comments_owned')
 
-    favourites = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Fav', 
-                                        related_name='favourite_ads')
+    favorites = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Fav', 
+                                        related_name='favorite_ads')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -15,13 +15,13 @@ class AdListView(OwnerListView):
 
     def get(self, request):
         ad_list = Ad.objects.all()
-        favourites = list()
+        favorites = list()
         if request.user.is_authenticated:
             # rows = [{'id': 2}, {'id': 4} ...] list of rows
-            rows = request.user.favourite_ads.values('id')
-            # favourites = [2, 4, ...] using list comprehension
-            favourites = [row['id'] for row in rows]
-        ctx = {'ad_list': ad_list, 'favourites': favourites}
+            rows = request.user.favorite_ads.values('id')
+            # favorites = [2, 4, ...] using list comprehension
+            favorites = [row['id'] for row in rows]
+        ctx = {'ad_list': ad_list, 'favorites': favorites}
         return render(request, self.template_name, ctx)
 
 class AdDetailView(OwnerDetailView):
@@ -120,7 +120,7 @@ from django.utils.decorators import method_decorator
 from django.db.utils import IntegrityError
 
 @method_decorator(csrf_exempt, name='dispatch')
-class AddFavouriteView(LoginRequiredMixin, View):
+class AddFavoriteView(LoginRequiredMixin, View):
     def post(self, request, pk):
         print(f"Add PK {pk}")
         ad = get_object_or_404(Ad, id=pk)
@@ -132,7 +132,7 @@ class AddFavouriteView(LoginRequiredMixin, View):
         return HttpResponse()
     
 @method_decorator(csrf_exempt, name='dispatch')
-class DeleteFavouriteView(LoginRequiredMixin, View):
+class DeleteFavoriteView(LoginRequiredMixin, View):
     def post(self, request, pk):
         print(f"Delete PK {pk}")
         ad = get_object_or_404(Ad, id=pk)

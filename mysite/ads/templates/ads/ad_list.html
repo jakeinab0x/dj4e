@@ -1,6 +1,6 @@
 {% extends "base_menu.html" %}
 {% block content %}
-<h1>Favourite Ads</h1>
+<h1>Favorite Ads</h1>
 <p>
 {% if ad_list %}
 <ul>
@@ -14,9 +14,9 @@
       {% if user.is_authenticated %}
       <!-- Two hrefs with two stacked icons each - one showing and one hidden -->
       <a href="#" onclick=
-            "favPost('{% url 'ads:ad_unfavourite' ad.id %}', {{ ad.id }});return false;"
-            {% if ad.id not in favourites %} style="display: none;" {% endif %}
-            id="favourite_star_{{ad.id}}">
+            "favPost('{% url 'ads:ad_unfavorite' ad.id %}', {{ ad.id }});return false;"
+            {% if ad.id not in favorites %} style="display: none;" {% endif %}
+            id="favorite_star_{{ad.id}}">
       <span class="fa-stack" style="vertical-align: middle;">
       <i class="fa fa-star fa-stack-1x" style="color: orange;"></i>
       <i class="fa fa-star-o fa-stack-1x"></i>
@@ -24,9 +24,9 @@
       </a>
       <!-- the second href -->
       <a href="#" onclick=
-            "favPost('{% url 'ads:ad_favourite' ad.id %}', {{ ad.id }});return false;"
-            {% if ad.id in favourites %} style="display: none;" {% endif %}
-            id="unfavourite_star_{{ad.id}}">
+            "favPost('{% url 'ads:ad_favorite' ad.id %}', {{ ad.id }});return false;"
+            {% if ad.id in favorites %} style="display: none;" {% endif %}
+            id="unfavorite_star_{{ad.id}}">
       <span class="fa-stack" style="vertical-align: middle;">
       <i class="fa fa-star fa-stack-1x" style="display: none; color: orange;"></i>
       <i class="fa fa-star-o fa-stack-1x"></i>
@@ -72,8 +72,8 @@ function favPost(url, ad_id) {
   fetch(url, { method: 'POST', body: '{}' })
   .then((response) => {
     console.log(url, 'finished');
-    toggleInlineDisplay(`unfavourite_star_${ad_id}`);
-    toggleInlineDisplay(`favourite_star_${ad_id}`);
+    toggleInlineDisplay(`unfavorite_star_${ad_id}`);
+    toggleInlineDisplay(`favorite_star_${ad_id}`);
   }).catch((error) => {
     alert(`URL failed with ${error} ${url}`)
   });
