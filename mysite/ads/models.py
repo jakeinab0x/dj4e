@@ -14,7 +14,8 @@ class Ad(models.Model):
     content_type = models.CharField(max_length=256, null=True, blank=True,
                                     help_text='The MIMEType of the file')
     
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                              related_name='fav_ad_owner')
     comments = models.ManyToManyField(settings.AUTH_USER_MODEL,
                             through='Comment', related_name='comments_owned')
 
