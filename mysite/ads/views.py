@@ -6,11 +6,23 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ads.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 
-from ads.models import Ad, Comment
+from ads.models import Ad, Comment, Fav
 from ads.forms import CreateForm, CommentForm
 
 class AdListView(OwnerListView):
     model = Ad
+    template_name = 'ads/ad_list.html'
+
+    def get(self, request):
+        ad_list = Ad.objects.all()
+        favourites = list()
+        if request.user.is_authenticated:
+            # rows = [{'id': 2}, {'id': 4} ...] list of rows
+            rows = request.user.favourite_ads.values('id')
+            # favourites = [2, 4, ...] using list comprehension
+            favourites = [row['id'] for row in rows]
+        ctx = {'ad_list': ad_list, 'favourites': favourites}
+        return render(request, self.template_name, ctx)
 
 class AdDetailView(OwnerDetailView):
     model = Ad
@@ -100,3 +112,33 @@ class CommentDeleteView(OwnerDeleteView):
     def get_success_url(self):
         ad = self.object.ad
         return reverse('ads:ad_detail', args=[ad.id])
+
+# csrf exemption in class based views
+# https://stackoverflow.com/questions/16458166/how-to-disable-djangos-csrf-validation
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.db.utils import IntegrityError
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AddFavouriteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        print(f"Add PK {pk}")
+        ad = get_object_or_404(Ad, id=pk)
+        fav = Fav(user=request.user, ad=ad)
+        try: 
+            fav.save() # In case of duplicate key
+        except IntegrityError:
+            pass
+        return HttpResponse()
+    
+@method_decorator(csrf_exempt, name='dispatch')
+class DeleteFavouriteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        print(f"Delete PK {pk}")
+        ad = get_object_or_404(Ad, id=pk)
+        try:
+            Fav.objects.get(user=request.user, ad=ad).delete()
+        except Fav.DoesNotExist:
+            pass
+        return HttpResponse()
+    
