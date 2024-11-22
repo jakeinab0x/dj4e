@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.humanize.templatetags.humanize import naturaltime
+from django.db.models import Q
 
 from ads.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 
@@ -21,7 +23,38 @@ class AdListView(OwnerListView):
             rows = request.user.favorite_ads.values('id')
             # favorites = [2, 4, ...] using list comprehension
             favorites = [row['id'] for row in rows]
-        ctx = {'ad_list': ad_list, 'favorites': favorites}
+
+        # Get the value of a GET variable called "search", but if doesn't exist return False
+        # This will be the search query a user enters
+        strval = request.GET.get("search", False)
+        if strval:
+            # Simple title-only search
+            # objects = Post.objects.filter(title__contains=strval).select_related().distinct().order_by('-updated_at')[:10]
+
+            # Multi-field search
+            # __icontains for case-insensitive search
+            # Q objects allow for complex querying: https://docs.djangoproject.com/en/5.1/topics/db/queries/#complex-lookups-with-q-objects
+            # in this case, it allows for an OR statement
+            query = Q(title__icontains=strval)
+            query.add(Q(text__icontains=strval), Q.OR)
+            # The above code is equivalent to:
+            # query = Q(title__icontains=strval) | Q(text__icontains=strval)
+
+            # select_related() will grab Foreign Key object data https://docs.djangoproject.com/en/5.1/ref/models/querysets/#django.db.models.query.QuerySet.select_related
+            # distinct() eliminates duplicate rows from the query results https://docs.djangoproject.com/en/5.1/ref/models/querysets/#django.db.models.query.QuerySet.distinct
+            ad_search_list = Ad.objects.filter(query).select_related().distinct().order_by('-updated_at')[:10]
+        else:
+            ad_search_list = Ad.objects.all().order_by('-updated_at')[:10]
+
+        for obj in ad_search_list:
+            obj.natural_updated = naturaltime(obj.updated_at)
+
+        ctx = {
+                'ad_list': ad_list,
+                'favorites': favorites, 
+                'ad_search_list': ad_search_list,
+                'search': strval
+              }
         return render(request, self.template_name, ctx)
 
 class AdDetailView(OwnerDetailView):
