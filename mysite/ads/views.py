@@ -92,6 +92,11 @@ class AdCreateView(LoginRequiredMixin, View):
         ad = form.save(commit=False)
         ad.owner = self.request.user
         ad.save()
+        # For taggit, we need to use save_m2m() after save() on the form
+        # so that the ManytoMany relation is established with the instance's PK
+        # https://django-taggit.readthedocs.io/en/stable/forms.html#commit-false
+        # https://docs.djangoproject.com/en/5.1/topics/forms/modelforms/#the-save-method
+        form.save_m2m()
         return redirect(self.success_url)
 
 
@@ -115,7 +120,7 @@ class AdUpdateView(OwnerUpdateView):
 
         ad = form.save(commit=False)
         ad.save()
-    
+        form.save_m2m()
         return redirect(self.success_url)
 
 class AdDeleteView(OwnerDeleteView):
