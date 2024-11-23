@@ -35,10 +35,11 @@ class AdListView(OwnerListView):
             # __icontains for case-insensitive search
             # Q objects allow for complex querying: https://docs.djangoproject.com/en/5.1/topics/db/queries/#complex-lookups-with-q-objects
             # in this case, it allows for an OR statement
-            query = Q(title__icontains=strval)
-            query.add(Q(text__icontains=strval), Q.OR)
+            # query = Q(title__icontains=strval)
+            # query.add(Q(text__icontains=strval), Q.OR)
+            # query.add(Q(tags__name__in=[strval]), Q.OR)
             # The above code is equivalent to:
-            # query = Q(title__icontains=strval) | Q(text__icontains=strval)
+            query = Q(title__icontains=strval) | Q(text__icontains=strval) | Q(tags__name__in=[strval])
 
             # select_related() will grab Foreign Key object data https://docs.djangoproject.com/en/5.1/ref/models/querysets/#django.db.models.query.QuerySet.select_related
             # distinct() eliminates duplicate rows from the query results https://docs.djangoproject.com/en/5.1/ref/models/querysets/#django.db.models.query.QuerySet.distinct
