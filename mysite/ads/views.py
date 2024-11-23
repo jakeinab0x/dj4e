@@ -25,7 +25,7 @@ class AdListView(OwnerListView):
             favorites = [row['id'] for row in rows]
 
         # Get the value of a GET variable called "search", but if doesn't exist return False
-        # This will be the search query a user enters
+        # This will be the search query a user enters in the search bar
         strval = request.GET.get("search", False)
         if strval:
             # Simple title-only search
@@ -42,17 +42,16 @@ class AdListView(OwnerListView):
 
             # select_related() will grab Foreign Key object data https://docs.djangoproject.com/en/5.1/ref/models/querysets/#django.db.models.query.QuerySet.select_related
             # distinct() eliminates duplicate rows from the query results https://docs.djangoproject.com/en/5.1/ref/models/querysets/#django.db.models.query.QuerySet.distinct
-            ad_search_list = Ad.objects.filter(query).select_related().distinct().order_by('-updated_at')[:10]
+            ad_list = Ad.objects.filter(query).select_related().distinct().order_by('-updated_at')[:10]
         else:
-            ad_search_list = Ad.objects.all().order_by('-updated_at')[:10]
+            ad_list = Ad.objects.all().order_by('-updated_at')[:10]
 
-        for obj in ad_search_list:
+        for obj in ad_list:
             obj.natural_updated = naturaltime(obj.updated_at)
 
         ctx = {
                 'ad_list': ad_list,
                 'favorites': favorites, 
-                'ad_search_list': ad_search_list,
                 'search': strval
               }
         return render(request, self.template_name, ctx)
