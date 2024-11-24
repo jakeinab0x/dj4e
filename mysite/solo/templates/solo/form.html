@@ -1,3 +1,4 @@
+{% if user.is_authenticated %}
 <h1>Welcome to Homework TimeCode_8182</h1>
 {% if result %}
 <p>Your result is {{ result }}</p>
@@ -12,3 +13,4 @@
 <script>
     console.log('Hello to everyone running the browser debugger -- Chuck');
 </script>
+{% endif %}
